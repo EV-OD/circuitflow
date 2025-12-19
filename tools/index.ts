@@ -13,6 +13,12 @@ import { createLayoutGridTool } from './layout';
 import { runElectricalAnalysisTool } from './analysis';
 import { submitCircuitReportTool } from './reporting';
 import { checkDesignRulesTool } from './design_check';
+import { 
+    createSeriesCircuitTool, 
+    createParallelCircuitTool, 
+    createVoltageDividerTool, 
+    batchModifyPropertiesTool 
+} from './templates';
 
 export const tools = [
     addComponentTool,
@@ -27,5 +33,9 @@ export const tools = [
     createLayoutGridTool,
     runElectricalAnalysisTool,
     checkDesignRulesTool,
-    submitCircuitReportTool
+    submitCircuitReportTool,
+    createSeriesCircuitTool,
+    createParallelCircuitTool,
+    createVoltageDividerTool,
+    batchModifyPropertiesTool
 ];

@@ -6,7 +6,7 @@ import { findAutoWirePath } from '../../../services/auto-wiring';
 import { calculateGridPosition } from '../../../services/grid';
 import { findComponent, getComponentDefinition, CircuitActions, CircuitContextRefs } from './utils';
 
-const COMPONENT_ALIASES: Record<string, string> = {
+export const COMPONENT_ALIASES: Record<string, string> = {
     'voltage_pulse': 'source_pulse',
     'pulse_source': 'source_pulse',
     'sq_wave': 'source_pulse',

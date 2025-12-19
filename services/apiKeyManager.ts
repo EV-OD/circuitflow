@@ -7,9 +7,11 @@ export class ApiKeyManager {
         // Load keys from environment variables
         const key0 = process.env.GEMINI_API_KEY || process.env.API_KEY;
         const key1 = process.env.GEMINI_API_KEY1;
+        const key2 = process.env.GEMINI_API_KEY2;
 
         if (key0) this.keys.push(key0);
         if (key1) this.keys.push(key1);
+        if (key2) this.keys.push(key2);
 
         if (this.keys.length === 0) {
             console.warn("ApiKeyManager: No API keys found in environment variables.");

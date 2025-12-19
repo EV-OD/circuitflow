@@ -18,6 +18,12 @@ import { handleCreateLayoutGrid } from '../handlers/layoutHandlers';
 import { handleRunElectricalAnalysis } from '../handlers/analysisHandlers';
 import { handleSubmitCircuitReport } from '../handlers/reportingHandlers';
 import { handleCheckDesignRules } from '../handlers/designCheckHandlers';
+import { 
+    handleCreateSeriesCircuit, 
+    handleCreateParallelCircuit, 
+    handleCreateVoltageDivider, 
+    handleBatchModifyProperties 
+} from '../handlers/templateHandlers';
 
 export const useAgentTools = () => {
   const { 
@@ -83,6 +89,22 @@ export const useAgentTools = () => {
               switch (name) {
                   case 'add_component':
                       result = handleAddComponent(args, circuitActions, refs, batchComponents);
+                      break;
+
+                  case 'createSeriesCircuit':
+                      result = handleCreateSeriesCircuit(args, circuitActions, refs, batchComponents);
+                      break;
+
+                  case 'createParallelCircuit':
+                      result = handleCreateParallelCircuit(args, circuitActions, refs, batchComponents);
+                      break;
+
+                  case 'createVoltageDivider':
+                      result = handleCreateVoltageDivider(args, circuitActions, refs, batchComponents);
+                      break;
+
+                  case 'batchModifyProperties':
+                      result = handleBatchModifyProperties(args, circuitActions, refs);
                       break;
 
                   case 'create_layout_grid':
