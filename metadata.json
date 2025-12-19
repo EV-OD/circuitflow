@@ -1,0 +1,5 @@
+{
+  "name": "CircuitFlow Simulator",
+  "description": "A modern, modular web-based circuit simulator and schematic editor with infinite canvas, component management, and future SPICE integration.",
+  "requestFramePermissions": []
+}

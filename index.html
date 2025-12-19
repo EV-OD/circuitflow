@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CircuitFlow Simulator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              gray: {
+                750: '#2d3748',
+                850: '#1a202c',
+                950: '#0d1117',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body, html, #root {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+      }
+      /* Custom scrollbar for sidebar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #ccc; 
+        border-radius: 3px;
+      }
+      .dark ::-webkit-scrollbar-thumb {
+        background: #555;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #999; 
+      }
+      .dark ::-webkit-scrollbar-thumb:hover {
+        background: #777; 
+      }
+      
+      /* Markdown Content Styling */
+      .prose p {
+        margin-bottom: 0.5rem;
+      }
+      .prose p:last-child {
+        margin-bottom: 0;
+      }
+      .prose ul {
+        list-style-type: disc;
+        padding-left: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .prose ol {
+        list-style-type: decimal;
+        padding-left: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .prose pre {
+        background-color: #f3f4f6;
+        border-radius: 0.375rem;
+        padding: 0.5rem;
+        overflow-x: auto;
+        font-size: 0.75rem;
+        font-family: monospace;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .dark .prose pre {
+        background-color: #111827;
+        color: #e5e7eb;
+      }
+      .prose blockquote {
+        border-left: 4px solid #e5e7eb;
+        padding-left: 1rem;
+        color: #6b7280;
+        font-style: italic;
+      }
+      .dark .prose blockquote {
+        border-color: #374151;
+        color: #9ca3af;
+      }
+      /* Table Styling */
+      .prose table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+      }
+      .prose th {
+        font-weight: 600;
+        text-align: left;
+        padding: 0.5rem;
+        border-bottom: 2px solid #e5e7eb;
+        background-color: #f9fafb;
+      }
+      .dark .prose th {
+        border-color: #374151;
+        background-color: #1f2937;
+        color: #e5e7eb;
+      }
+      .prose td {
+        padding: 0.5rem;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .dark .prose td {
+        border-color: #374151;
+        color: #d1d5db;
+      }
+      .prose tr:last-child td {
+        border-bottom: none;
+      }
+      
+      /* KaTeX Adjustments */
+      .katex {
+        font-size: 1.1em;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
+    "@monaco-editor/react": "https://aistudiocdn.com/@monaco-editor/react@^4.6.0",
+    "d3": "https://aistudiocdn.com/d3@^7.9.0",
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.1",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.32.0",
+    "react-markdown": "https://aistudiocdn.com/react-markdown@^10.1.0",
+    "@supabase/supabase-js": "https://aistudiocdn.com/@supabase/supabase-js@^2.87.1",
+    "markdown-it": "https://esm.sh/markdown-it@14.1.0",
+    "markdown-it-katex": "https://esm.sh/markdown-it-katex@2.0.3"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
