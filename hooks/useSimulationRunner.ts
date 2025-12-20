@@ -31,9 +31,12 @@ export const useSimulationRunner = () => {
       } catch (e: any) {
           console.error("Simulation failed", e);
           let msg = e.message || "Unknown error";
-          if (msg.includes("produced no data")) {
-              msg += " Check your circuit connections (Ground?) and parameters.";
+          
+          // Heuristic hints based on common NGSPICE errors
+          if (msg.includes("produced no data") || msg.includes("singular matrix") || msg.includes("no path to ground")) {
+              msg += "\n\nHint: Do you have a Ground (GND) component connected?";
           }
+          
           alert(`Simulation Error: ${msg}`);
       } finally {
           setIsSimulating(false);

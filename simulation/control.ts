@@ -57,8 +57,11 @@ export const startSimulation = async (
     // 3. Execute Simulation
     const data = await simulationService.runSimulation(netlistResult.netlist);
 
-    if (!data) {
-        throw new Error("Simulation produced no data.");
+    if (!data || (data.data.length === 0 && data.variables.length === 0)) {
+        const errorMsg = data?.logs 
+            ? `Simulation failed. Logs:\n${data.logs.slice(-500)}` // Show last 500 chars
+            : "Simulation produced no data.";
+        throw new Error(errorMsg);
     }
 
     return {

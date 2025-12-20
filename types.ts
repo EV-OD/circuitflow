@@ -102,6 +102,7 @@ export interface SimulationData {
   variables: string[]; // e.g., ["time", "v(in)", "v(out)"]
   data: number[][]; // Array of rows, where each row is an array of values
   measurements?: Record<string, number>; // Scalar results from .meas directives
+  logs?: string; // Raw simulation logs for debugging
 }
 
 export interface SimulationConfig {

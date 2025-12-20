@@ -263,14 +263,36 @@ export const generateSpiceNetlist = (
         value = `${getProp('model', comp.definitionType.toUpperCase())} W=${getProp('w', '10u')} L=${getProp('l', '1u')}`;
         break;
       case 'lm741':
+      case 'lf356':
         prefix = 'X';
-        value = getProp('model', 'LM741');
+        value = getProp('model', comp.definitionType === 'lm741' ? 'LM741' : 'LF356');
         nodes = [
            getNode(comp.id, 'non'),
            getNode(comp.id, 'inv'),
            getNode(comp.id, 'v+'),
            getNode(comp.id, 'v-'),
            getNode(comp.id, 'out')
+        ];
+        break;
+      case 'transformer':
+        prefix = 'X';
+        value = getProp('model', 'XFMR_NORMAL');
+        nodes = [
+            getNode(comp.id, 'p1'),
+            getNode(comp.id, 'p2'),
+            getNode(comp.id, 's1'),
+            getNode(comp.id, 's2')
+        ];
+        break;
+      case 'transformer_ct':
+        prefix = 'X';
+        value = getProp('model', 'XFMR_CT');
+        nodes = [
+            getNode(comp.id, 'p1'),
+            getNode(comp.id, 'p2'),
+            getNode(comp.id, 's1'),
+            getNode(comp.id, 'ct'),
+            getNode(comp.id, 's2')
         ];
         break;
       default:

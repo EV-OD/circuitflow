@@ -14,6 +14,9 @@ import { TransistorNPNSymbol } from './symbols/TransistorNPNSymbol';
 import { TransistorPNPSymbol } from './symbols/TransistorPNPSymbol';
 import { TransistorNMOSSymbol } from './symbols/TransistorNMOSSymbol';
 import { TransistorPMOSSymbol } from './symbols/TransistorPMOSSymbol';
+import { OpAmpSymbol } from './symbols/OpAmpSymbol';
+import { TransformerSymbol } from './symbols/TransformerSymbol';
+import { TransformerCTSymbol } from './symbols/TransformerCTSymbol';
 import { GenericSymbol } from './symbols/GenericSymbol';
 
 interface SymbolShapeProps {
@@ -50,7 +53,11 @@ export const SymbolShape: React.FC<SymbolShapeProps> = ({ symbol, className = ""
     case 'transistor_nmos':
         return <TransistorNMOSSymbol className={className} />;
     case 'transistor_pmos':
-        return <TransistorPMOSSymbol className={className} />;
+        return <TransistorPMOSSymbol className={className} />;    case 'transformer':
+      return <TransformerSymbol className={className} />;
+    case 'transformer_ct':
+      return <TransformerCTSymbol className={className} />;    case 'opamp':
+        return <OpAmpSymbol className={className} />;
     default:
       return <GenericSymbol className={className} />;
   }

@@ -15,7 +15,8 @@ export const parseSpiceOutput = (rawOutput: string, logs: string = ''): Simulati
     analysisType: 'Unknown',
     variables: [],
     data: [],
-    measurements: {}
+    measurements: {},
+    logs: logs
   };
 
   let isReadingData = false;

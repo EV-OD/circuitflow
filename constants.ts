@@ -131,6 +131,33 @@ export const COMPONENT_LIBRARY: ComponentDefinition[] = [
     ports: [{ id: 'd', x: 20, y: -20 }, { id: 'g', x: -20, y: 0 }, { id: 's', x: 20, y: 20 }],
     datasheet: { v_max: 20, i_max: 0.2 }
   },
+  {
+    type: 'transformer',
+    label: 'Transformer',
+    category: ComponentCategory.PRIMARY,
+    symbol: 'transformer',
+    defaultProperties: { model: 'XFMR_NORMAL', ratio: '1' },
+    ports: [
+      { id: 'p1', x: -20, y: -40 },
+      { id: 'p2', x: -20, y: 40 },
+      { id: 's1', x: 20, y: -40 },
+      { id: 's2', x: 20, y: 40 }
+    ]
+  },
+  {
+    type: 'transformer_ct',
+    label: 'Transformer (CT)',
+    category: ComponentCategory.PRIMARY,
+    symbol: 'transformer_ct',
+    defaultProperties: { model: 'XFMR_CT', ratio: '1' },
+    ports: [
+      { id: 'p1', x: -20, y: -40 },
+      { id: 'p2', x: -20, y: 40 },
+      { id: 's1', x: 20, y: -40 },
+      { id: 's2', x: 20, y: 40 },
+      { id: 'ct', x: 30, y: 0 }
+    ]
+  },
   // --- Real World Components ---
   {
     type: '2n2222',
@@ -154,7 +181,7 @@ export const COMPONENT_LIBRARY: ComponentDefinition[] = [
     type: 'lm741',
     label: 'LM741 OpAmp',
     category: ComponentCategory.REAL_WORLD,
-    symbol: 'generic',
+    symbol: 'opamp',
     defaultProperties: { model: 'LM741', v_max: '22', p_max: '0.5' },
     ports: [
       { id: 'inv', x: -40, y: -20 }, // Snapped from -10
@@ -164,5 +191,20 @@ export const COMPONENT_LIBRARY: ComponentDefinition[] = [
       { id: 'v-', x: 0, y: 40 }      // Snapped from 30
     ],
     datasheet: { v_max: 22, p_max: 0.5 }
+  },
+  {
+    type: 'lf356',
+    label: 'LF356 JFET OpAmp',
+    category: ComponentCategory.REAL_WORLD,
+    symbol: 'opamp',
+    defaultProperties: { model: 'LF356', v_max: '18', p_max: '0.5' },
+    ports: [
+      { id: 'inv', x: -40, y: -20 },
+      { id: 'non', x: -40, y: 20 },
+      { id: 'out', x: 40, y: 0 },
+      { id: 'v+', x: 0, y: -40 },
+      { id: 'v-', x: 0, y: 40 }
+    ],
+    datasheet: { v_max: 18, p_max: 0.5 }
   }
 ];
