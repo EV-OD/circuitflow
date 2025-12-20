@@ -70,6 +70,34 @@ export const COMPONENT_LIBRARY: ComponentDefinition[] = [
     ports: [{ id: 'plus', x: 0, y: -40 }, { id: 'minus', x: 0, y: 40 }]
   },
   {
+    type: 'source_sine',
+    label: 'Sine Wave',
+    category: ComponentCategory.PRIMARY,
+    symbol: 'source_sine',
+    defaultProperties: { 
+        offset: '0', 
+        amplitude: '5', 
+        frequency: '1k', 
+        delay: '0', 
+        damping: '0' 
+    },
+    ports: [{ id: 'plus', x: 0, y: -40 }, { id: 'minus', x: 0, y: 40 }]
+  },
+  {
+    type: 'source_cosine',
+    label: 'Cosine Wave',
+    category: ComponentCategory.PRIMARY,
+    symbol: 'source_cosine',
+    defaultProperties: { 
+        offset: '0', 
+        amplitude: '5', 
+        frequency: '1k', 
+        delay: '0', 
+        damping: '0' 
+    },
+    ports: [{ id: 'plus', x: 0, y: -40 }, { id: 'minus', x: 0, y: 40 }]
+  },
+  {
     type: 'current_dc',
     label: 'DC Current',
     category: ComponentCategory.PRIMARY,

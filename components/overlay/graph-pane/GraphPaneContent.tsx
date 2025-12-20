@@ -16,6 +16,7 @@ interface GraphPaneContentProps {
     hoverData: TooltipData | null;
     setHoverData: (data: TooltipData | null) => void;
     onRemoveVariable: (v: string) => void;
+    showCursors: boolean;
 }
 
 export const GraphPaneContent: React.FC<GraphPaneContentProps> = ({
@@ -26,7 +27,8 @@ export const GraphPaneContent: React.FC<GraphPaneContentProps> = ({
     pane,
     hoverData,
     setHoverData,
-    onRemoveVariable
+    onRemoveVariable,
+    showCursors
 }) => {
     return (
         <div className="flex-1 flex overflow-hidden">
@@ -38,6 +40,7 @@ export const GraphPaneContent: React.FC<GraphPaneContentProps> = ({
                             data={displayData}
                             xAxisVariable={xAxisVar}
                             onHover={setHoverData}
+                            showCursors={showCursors}
                         />
                     ) : (
                         <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 text-xs select-none">
@@ -71,6 +74,7 @@ export const GraphPaneContent: React.FC<GraphPaneContentProps> = ({
                     series={processedGraphData.series}
                     tooltipData={hoverData}
                     onRemove={onRemoveVariable}
+                    xAxisLabel={processedGraphData.xLabel}
                 />
             )}
         </div>

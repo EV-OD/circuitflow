@@ -43,6 +43,19 @@ class UnionFind {
   }
 }
 
+const parseSpiceValue = (val: string): number => {
+    if (!val) return 0;
+    // Updated regex to handle negative numbers
+    const match = val.match(/^([-\d\.]+)([a-zA-Z]*)$/);
+    if (!match) return parseFloat(val);
+    const num = parseFloat(match[1]);
+    const suffix = match[2].toLowerCase();
+    const multipliers: Record<string, number> = {
+        't': 1e12, 'g': 1e9, 'meg': 1e6, 'k': 1e3, 'mil': 25.4e-6, 'm': 1e-3, 'u': 1e-6, 'n': 1e-9, 'p': 1e-12, 'f': 1e-15
+    };
+    return num * (multipliers[suffix] || 1);
+};
+
 export const generateSpiceNetlist = (
     components: CircuitComponent[], 
     wires: Wire[], 
@@ -137,6 +150,8 @@ export const generateSpiceNetlist = (
                      def.symbol === 'inductor' ? 'L' :
                      def.symbol === 'source_dc' ? 'V' :
                      def.symbol === 'source_pulse' ? 'V' :
+                     def.symbol === 'source_sine' ? 'V' :
+                     def.symbol === 'source_cosine' ? 'B' :
                      def.symbol === 'source_current' ? 'I' :
                      def.symbol === 'diode' ? 'D' :
                      def.symbol.startsWith('transistor_') ? (def.symbol.includes('mos') ? 'M' : 'Q') : 'X';
@@ -181,6 +196,45 @@ export const generateSpiceNetlist = (
         const p_per = getProp('per', '2m');
         // Add "DC 0" to prevent NGSPICE warnings about missing DC value for OP analysis
         value = `PULSE(${p_v1} ${p_v2} ${p_td} ${p_tr} ${p_tf} ${p_pw} ${p_per}) DC 0`;
+        nodes = [getNode(comp.id, 'plus'), getNode(comp.id, 'minus')];
+        break;
+      case 'source_sine':
+        prefix = 'V';
+        const s_off = getProp('offset', '0');
+        const s_amp = getProp('amplitude', '5');
+        const s_freq = getProp('frequency', '1k');
+        const s_delay = getProp('delay', '0');
+        const s_damp = getProp('damping', '0');
+        // SIN(VO VA FREQ TD THETA)
+        value = `SIN(${s_off} ${s_amp} ${s_freq} ${s_delay} ${s_damp}) DC 0`;
+        nodes = [getNode(comp.id, 'plus'), getNode(comp.id, 'minus')];
+        break;
+      case 'source_cosine':
+        prefix = 'B'; // Use Behavioral Source for Cosine
+        const c_off = getProp('offset', '0');
+        const c_amp = getProp('amplitude', '5');
+        const c_freq = getProp('frequency', '1k');
+        const c_delay = getProp('delay', '0');
+        const c_damp = getProp('damping', '0');
+        
+        const val_off = parseSpiceValue(c_off);
+        const val_amp = parseSpiceValue(c_amp);
+        const val_freq = parseSpiceValue(c_freq);
+        const val_delay = parseSpiceValue(c_delay);
+        const val_damp = parseSpiceValue(c_damp);
+        
+        const omega = 2 * Math.PI * val_freq;
+        
+        // V = offset + amp * exp(-damp*(time-delay)) * cos(omega*(time-delay))
+        // We use 'time' variable which is available in B-sources
+        let expr = `${val_off} + ${val_amp} * exp(-${val_damp} * (time - ${val_delay})) * cos(${omega} * (time - ${val_delay}))`;
+        
+        // Handle delay: 0 before delay time
+        if (val_delay > 0) {
+            expr = `time < ${val_delay} ? 0 : (${expr})`;
+        }
+        
+        value = `V=${expr}`;
         nodes = [getNode(comp.id, 'plus'), getNode(comp.id, 'minus')];
         break;
       case 'current_dc':

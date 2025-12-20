@@ -11,9 +11,10 @@ interface GraphCanvasProps {
     data: ProcessedGraphData;
     isDarkMode: boolean;
     onHover: (data: TooltipData | null) => void;
+    showCursors: boolean;
 }
 
-export const GraphCanvas: React.FC<GraphCanvasProps> = React.memo(({ dimensions, data, isDarkMode, onHover }) => {
+export const GraphCanvas: React.FC<GraphCanvasProps> = React.memo(({ dimensions, data, isDarkMode, onHover, showCursors }) => {
     const svgRef = useRef<SVGSVGElement>(null);
     const gRef = useRef<SVGGElement>(null);
     
@@ -83,7 +84,7 @@ export const GraphCanvas: React.FC<GraphCanvasProps> = React.memo(({ dimensions,
     // 3. Interaction Hook (Handles Zoom, Pan, Hover, and creates Overlay/SelectionBox)
     useGraphInteraction({
         svgRef, gRef, dimensions, data, 
-        onHover, updateChart, currentDomains, zoomHistory
+        onHover, updateChart, currentDomains, zoomHistory, showCursors
     });
 
     // Update clipping path when dimensions change

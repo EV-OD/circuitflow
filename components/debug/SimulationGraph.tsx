@@ -11,9 +11,10 @@ interface SimulationGraphProps {
   data: SimulationData;
   xAxisVariable?: string; // Optional override
   onHover?: (data: TooltipData | null) => void;
+  showCursors?: boolean;
 }
 
-export const SimulationGraph: React.FC<SimulationGraphProps> = ({ data, xAxisVariable, onHover }) => {
+export const SimulationGraph: React.FC<SimulationGraphProps> = ({ data, xAxisVariable, onHover, showCursors = false }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { isDarkMode } = useCircuit();
   
@@ -41,6 +42,7 @@ export const SimulationGraph: React.FC<SimulationGraphProps> = ({ data, xAxisVar
             data={processedData}
             isDarkMode={isDarkMode}
             onHover={handleHover}
+            showCursors={showCursors}
         />
     </div>
   );

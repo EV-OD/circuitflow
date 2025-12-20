@@ -7,6 +7,8 @@ import { DiodeSymbol } from './symbols/DiodeSymbol';
 import { SourceDCSymbol } from './symbols/SourceDCSymbol';
 import { SourceCurrentSymbol } from './symbols/SourceCurrentSymbol';
 import { SourcePulseSymbol } from './symbols/SourcePulseSymbol';
+import { SourceSineSymbol } from './symbols/SourceSineSymbol';
+import { SourceCosineSymbol } from './symbols/SourceCosineSymbol';
 import { GroundSymbol } from './symbols/GroundSymbol';
 import { TransistorNPNSymbol } from './symbols/TransistorNPNSymbol';
 import { TransistorPNPSymbol } from './symbols/TransistorPNPSymbol';
@@ -33,6 +35,10 @@ export const SymbolShape: React.FC<SymbolShapeProps> = ({ symbol, className = ""
       return <SourceDCSymbol className={className} />;
     case 'source_pulse':
       return <SourcePulseSymbol className={className} />;
+    case 'source_sine':
+      return <SourceSineSymbol className={className} />;
+    case 'source_cosine':
+      return <SourceCosineSymbol className={className} />;
     case 'source_current':
       return <SourceCurrentSymbol className={className} />;
     case 'gnd':

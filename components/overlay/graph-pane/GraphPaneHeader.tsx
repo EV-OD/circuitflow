@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Activity, Table, X } from 'lucide-react';
+import { Activity, Table, X, ScanLine } from 'lucide-react';
 import { GraphAxisControl } from '../GraphAxisControl';
 import { SimulationData, GraphPane, ToolType } from '../../../types';
 import { COLORS } from '../../../hooks/useGraphData';
@@ -17,6 +17,8 @@ interface GraphPaneHeaderProps {
     onRemoveVariable: (v: string) => void;
     onAddVoltageProbe: () => void;
     onAddCurrentProbe: () => void;
+    showCursors: boolean;
+    setShowCursors: (show: boolean) => void;
 }
 
 export const GraphPaneHeader: React.FC<GraphPaneHeaderProps> = ({
@@ -29,7 +31,9 @@ export const GraphPaneHeader: React.FC<GraphPaneHeaderProps> = ({
     onAddVariable,
     onRemoveVariable,
     onAddVoltageProbe,
-    onAddCurrentProbe
+    onAddCurrentProbe,
+    showCursors,
+    setShowCursors
 }) => {
     const { startProbing, setActiveTool } = useCircuit();
     const getColor = (idx: number) => COLORS[idx % COLORS.length];
@@ -109,21 +113,36 @@ export const GraphPaneHeader: React.FC<GraphPaneHeaderProps> = ({
             </div>
 
             {/* View Mode Toggle */}
-            <div className="flex bg-gray-200 dark:bg-gray-800 rounded p-0.5 shrink-0">
-                <button
-                    onClick={() => setViewMode("graph")}
-                    className={`p-1 rounded transition-colors ${
-                        viewMode === "graph"
-                            ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm"
-                            : "text-gray-500 hover:text-gray-700 dark:text-gray-400"
-                    }`}
-                    title="Graph View"
-                >
-                    <Activity className="w-3.5 h-3.5" />
-                </button>
-                <button
-                    onClick={() => setViewMode("table")}
-                    className={`p-1 rounded transition-colors ${
+            <div className="flex items-center gap-2">
+                {viewMode === "graph" && (
+                    <button
+                        onClick={() => setShowCursors(!showCursors)}
+                        className={`p-1.5 rounded transition-colors ${
+                            showCursors
+                                ? "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
+                                : "text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-800"
+                        }`}
+                        title="Toggle Cursors"
+                    >
+                        <ScanLine className="w-3.5 h-3.5" />
+                    </button>
+                )}
+
+                <div className="flex bg-gray-200 dark:bg-gray-800 rounded p-0.5 shrink-0">
+                    <button
+                        onClick={() => setViewMode("graph")}
+                        className={`p-1 rounded transition-colors ${
+                            viewMode === "graph"
+                                ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm"
+                                : "text-gray-500 hover:text-gray-700 dark:text-gray-400"
+                        }`}
+                        title="Graph View"
+                    >
+                        <Activity className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                        onClick={() => setViewMode("table")}
+                        className={`p-1 rounded transition-colors ${
                         viewMode === "table"
                             ? "bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm"
                             : "text-gray-500 hover:text-gray-700 dark:text-gray-400"
@@ -134,5 +153,7 @@ export const GraphPaneHeader: React.FC<GraphPaneHeaderProps> = ({
                 </button>
             </div>
         </div>
+        </div>
     );
 };
+

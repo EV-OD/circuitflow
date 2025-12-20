@@ -35,6 +35,7 @@ export const GraphPane: React.FC<GraphPaneProps> = ({ paneId }) => {
   } | null>(null);
   const [viewMode, setViewMode] = useState<"graph" | "table">("graph");
   const [hoverData, setHoverData] = useState<TooltipData | null>(null);
+  const [showCursors, setShowCursors] = useState(false);
 
   // Determine X Axis
   const xAxisVar = pane.xAxis || simulationResults?.variables[0] || "time";
@@ -88,6 +89,8 @@ export const GraphPane: React.FC<GraphPaneProps> = ({ paneId }) => {
         onRemoveVariable={removeVariable}
         onAddVoltageProbe={handleAddVoltage}
         onAddCurrentProbe={handleAddCurrent}
+        showCursors={showCursors}
+        setShowCursors={setShowCursors}
       />
 
       <GraphPaneContent 
@@ -99,6 +102,7 @@ export const GraphPane: React.FC<GraphPaneProps> = ({ paneId }) => {
         hoverData={hoverData}
         setHoverData={setHoverData}
         onRemoveVariable={removeVariable}
+        showCursors={showCursors}
       />
 
       {/* Context Menu */}
