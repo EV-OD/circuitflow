@@ -13,7 +13,7 @@ export const COMPONENT_LIBRARY: ComponentDefinition[] = [
     label: 'Resistor',
     category: ComponentCategory.PRIMARY,
     symbol: 'resistor',
-    defaultProperties: { resistance: '1k', tolerance: '5%' },
+    defaultProperties: { resistance: '1k', tolerance: '5%', p_max: '0.25', v_max: '200' },
     ports: [{ id: '1', x: -40, y: 0 }, { id: '2', x: 40, y: 0 }],
     datasheet: { p_max: 0.25, v_max: 200 } // 1/4 Watt default
   },
@@ -22,7 +22,7 @@ export const COMPONENT_LIBRARY: ComponentDefinition[] = [
     label: 'Capacitor',
     category: ComponentCategory.PRIMARY,
     symbol: 'capacitor',
-    defaultProperties: { capacitance: '10uF', voltage: '16V' },
+    defaultProperties: { capacitance: '10uF', voltage: '16V', v_max: '16' },
     ports: [{ id: '1', x: -20, y: 0 }, { id: '2', x: 20, y: 0 }],
     datasheet: { v_max: 16 }
   },
@@ -31,7 +31,7 @@ export const COMPONENT_LIBRARY: ComponentDefinition[] = [
     label: 'Inductor',
     category: ComponentCategory.PRIMARY,
     symbol: 'inductor',
-    defaultProperties: { inductance: '100mH' },
+    defaultProperties: { inductance: '100mH', i_max: '0.5' },
     ports: [{ id: '1', x: -40, y: 0 }, { id: '2', x: 40, y: 0 }],
     datasheet: { i_max: 0.5 }
   },
@@ -40,7 +40,7 @@ export const COMPONENT_LIBRARY: ComponentDefinition[] = [
     label: 'Diode',
     category: ComponentCategory.PRIMARY,
     symbol: 'diode',
-    defaultProperties: { model: 'D1N4148' },
+    defaultProperties: { model: 'D1N4148', i_max: '0.2', v_max: '75' },
     // Adjusted to +/- 20 to align with 20px grid
     ports: [{ id: 'a', x: -20, y: 0 }, { id: 'k', x: 20, y: 0 }],
     datasheet: { i_max: 0.2, v_max: 75 } // 1N4148 specs
@@ -90,7 +90,7 @@ export const COMPONENT_LIBRARY: ComponentDefinition[] = [
     label: 'NMOS FET',
     category: ComponentCategory.PRIMARY,
     symbol: 'transistor_nmos',
-    defaultProperties: { model: 'NMOS', w: '10u', l: '1u' },
+    defaultProperties: { model: 'NMOS', w: '10u', l: '1u', v_max: '20', i_max: '0.2' },
     ports: [{ id: 'd', x: 20, y: -20 }, { id: 'g', x: -20, y: 0 }, { id: 's', x: 20, y: 20 }],
     datasheet: { v_max: 20, i_max: 0.2 } // Generic low power MOS
   },
@@ -99,7 +99,7 @@ export const COMPONENT_LIBRARY: ComponentDefinition[] = [
     label: 'PMOS FET',
     category: ComponentCategory.PRIMARY,
     symbol: 'transistor_pmos',
-    defaultProperties: { model: 'PMOS', w: '10u', l: '1u' },
+    defaultProperties: { model: 'PMOS', w: '10u', l: '1u', v_max: '20', i_max: '0.2' },
     ports: [{ id: 'd', x: 20, y: -20 }, { id: 'g', x: -20, y: 0 }, { id: 's', x: 20, y: 20 }],
     datasheet: { v_max: 20, i_max: 0.2 }
   },
@@ -109,7 +109,7 @@ export const COMPONENT_LIBRARY: ComponentDefinition[] = [
     label: '2N2222 NPN',
     category: ComponentCategory.REAL_WORLD,
     symbol: 'transistor_npn',
-    defaultProperties: { model: '2N2222', mfg: 'Generic' },
+    defaultProperties: { model: '2N2222', mfg: 'Generic', i_max: '0.8', v_max: '40', p_max: '0.625' },
     ports: [{ id: 'c', x: 20, y: -20 }, { id: 'b', x: -20, y: 0 }, { id: 'e', x: 20, y: 20 }],
     datasheet: { i_max: 0.8, v_max: 40, p_max: 0.625 }
   },
@@ -118,7 +118,7 @@ export const COMPONENT_LIBRARY: ComponentDefinition[] = [
     label: '2N3906 PNP',
     category: ComponentCategory.REAL_WORLD,
     symbol: 'transistor_pnp',
-    defaultProperties: { model: '2N3906', mfg: 'Generic' },
+    defaultProperties: { model: '2N3906', mfg: 'Generic', i_max: '0.2', v_max: '40', p_max: '0.625' },
     ports: [{ id: 'c', x: 20, y: -20 }, { id: 'b', x: -20, y: 0 }, { id: 'e', x: 20, y: 20 }],
     datasheet: { i_max: 0.2, v_max: 40, p_max: 0.625 }
   },
@@ -127,7 +127,7 @@ export const COMPONENT_LIBRARY: ComponentDefinition[] = [
     label: 'LM741 OpAmp',
     category: ComponentCategory.REAL_WORLD,
     symbol: 'generic',
-    defaultProperties: { model: 'LM741' },
+    defaultProperties: { model: 'LM741', v_max: '22', p_max: '0.5' },
     ports: [
       { id: 'inv', x: -40, y: -20 }, // Snapped from -10
       { id: 'non', x: -40, y: 20 },  // Snapped from 10

@@ -1,10 +1,12 @@
 
 import React, { useState } from 'react';
-import { AlertCircle, AlertTriangle, Info, List, X, ChevronUp, ChevronDown } from 'lucide-react';
+import { AlertCircle, AlertTriangle, Info, List, X, ChevronUp, ChevronDown, LocateFixed, Wand2 } from 'lucide-react';
 import { useCircuit } from '../../context/CircuitContext';
+import { useAgent } from '../../context/AgentContext';
 
 export const CheckIssuesPanel: React.FC = () => {
     const { currentIssues, selectComponent, viewport, setViewport } = useCircuit();
+    const { sendMessage, setIsOpen: setAgentOpen } = useAgent();
     const [isOpen, setIsOpen] = useState(false);
 
     if (currentIssues.length === 0) return null;
@@ -25,6 +27,17 @@ export const CheckIssuesPanel: React.FC = () => {
         }
     };
 
+    const handleLocate = (e: React.MouseEvent, issue: any) => {
+        e.stopPropagation();
+        handleFocus(issue);
+    };
+
+    const handleFix = (e: React.MouseEvent, issue: any) => {
+        e.stopPropagation();
+        setAgentOpen(true);
+        sendMessage(`I have a design issue: "${issue.message}" (${issue.rule}). Can you help me fix it?`);
+    };
+
     return (
         <div className="absolute bottom-4 left-4 z-40 flex flex-col items-start gap-2">
             
@@ -39,32 +52,47 @@ export const CheckIssuesPanel: React.FC = () => {
                     </div>
                     <div className="overflow-y-auto p-2 space-y-1">
                         {currentIssues.map((issue, i) => (
-                            <button 
+                            <div 
                                 key={issue.id + i}
-                                onClick={() => handleFocus(issue)}
-                                className="w-full text-left p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex gap-3 group border border-transparent hover:border-gray-200 dark:hover:border-gray-700"
+                                className="w-full text-left p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors flex flex-col gap-2 group border border-transparent hover:border-gray-200 dark:hover:border-gray-700"
                             >
-                                <div className="shrink-0 mt-0.5">
-                                    {issue.severity === 'error' && <AlertCircle className="w-4 h-4 text-red-500" />}
-                                    {issue.severity === 'warning' && <AlertTriangle className="w-4 h-4 text-amber-500" />}
-                                    {issue.severity === 'info' && <Info className="w-4 h-4 text-blue-500" />}
+                                <div className="flex gap-3">
+                                    <div className="shrink-0 mt-0.5">
+                                        {issue.severity === 'error' && <AlertCircle className="w-4 h-4 text-red-500" />}
+                                        {issue.severity === 'warning' && <AlertTriangle className="w-4 h-4 text-amber-500" />}
+                                        {issue.severity === 'info' && <Info className="w-4 h-4 text-blue-500" />}
+                                    </div>
+                                    <div>
+                                        <div className={`text-xs font-bold ${
+                                            issue.severity === 'error' ? 'text-red-600 dark:text-red-400' :
+                                            issue.severity === 'warning' ? 'text-amber-600 dark:text-amber-400' :
+                                            'text-blue-600 dark:text-blue-400'
+                                        }`}>
+                                            {issue.rule}
+                                        </div>
+                                        <div className="text-xs text-gray-600 dark:text-gray-300 line-clamp-2">
+                                            {issue.message}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <div className={`text-xs font-bold ${
-                                        issue.severity === 'error' ? 'text-red-600 dark:text-red-400' :
-                                        issue.severity === 'warning' ? 'text-amber-600 dark:text-amber-400' :
-                                        'text-blue-600 dark:text-blue-400'
-                                    }`}>
-                                        {issue.rule}
-                                    </div>
-                                    <div className="text-xs text-gray-600 dark:text-gray-300 line-clamp-2">
-                                        {issue.message}
-                                    </div>
-                                    <div className="text-[10px] text-gray-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        Click to locate
-                                    </div>
+                                
+                                <div className="flex gap-2 pl-7">
+                                    <button 
+                                        onClick={(e) => handleLocate(e, issue)}
+                                        className="flex items-center gap-1 px-2 py-1 text-[10px] font-medium bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-300 transition-colors"
+                                    >
+                                        <LocateFixed className="w-3 h-3" />
+                                        Locate
+                                    </button>
+                                    <button 
+                                        onClick={(e) => handleFix(e, issue)}
+                                        className="flex items-center gap-1 px-2 py-1 text-[10px] font-medium bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50 rounded text-blue-600 dark:text-blue-400 transition-colors"
+                                    >
+                                        <Wand2 className="w-3 h-3" />
+                                        Fix it
+                                    </button>
                                 </div>
-                            </button>
+                            </div>
                         ))}
                     </div>
                 </div>

@@ -71,7 +71,10 @@ export const CircuitProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const autoCheck = useCircuitAutoCheck(
       state.components,
       state.wires,
-      state.customDefinitions
+      state.customDefinitions,
+      simulation.simulationResults && simulation.lastNetlistResult 
+          ? { data: simulation.simulationResults, netlistInfo: simulation.lastNetlistResult } 
+          : null
   );
 
   // Keyboard Shortcuts

@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { CircuitComponent, Wire, ComponentDefinition } from '../../../types';
+import { CircuitComponent, Wire, ComponentDefinition, SimulationData, NetlistResult } from '../../../types';
 import { runAutoCheck } from '../../../services/auto-checker';
 import { DesignIssue } from '../../../services/auto-checker/types';
 
@@ -11,7 +11,8 @@ interface Notification extends DesignIssue {
 export const useCircuitAutoCheck = (
     components: CircuitComponent[],
     wires: Wire[],
-    customDefinitions: ComponentDefinition[]
+    customDefinitions: ComponentDefinition[],
+    simulationResults?: { data: SimulationData, netlistInfo: NetlistResult } | null
 ) => {
     const [isAutoCheckEnabled, setIsAutoCheckEnabled] = useState(false);
     const [currentIssues, setCurrentIssues] = useState<DesignIssue[]>([]);
@@ -21,7 +22,13 @@ export const useCircuitAutoCheck = (
     const lastIssueIds = useRef<Set<string>>(new Set());
 
     const triggerCheck = useCallback(() => {
-        const issues = runAutoCheck(components, wires, customDefinitions);
+        const issues = runAutoCheck(
+            components, 
+            wires, 
+            customDefinitions,
+            simulationResults?.data,
+            simulationResults?.netlistInfo
+        );
         setCurrentIssues(issues);
 
         // Calculate new issues to notify
@@ -45,7 +52,7 @@ export const useCircuitAutoCheck = (
         }
 
         lastIssueIds.current = currentIds;
-    }, [components, wires, customDefinitions]);
+    }, [components, wires, customDefinitions, simulationResults]);
 
     // Effect for Auto-Mode: Run on dependency change
     useEffect(() => {
@@ -54,6 +61,13 @@ export const useCircuitAutoCheck = (
             return () => clearTimeout(timer);
         }
     }, [isAutoCheckEnabled, components, wires, customDefinitions, triggerCheck]);
+
+    // Run check when simulation results update
+    useEffect(() => {
+        if (simulationResults) {
+            triggerCheck();
+        }
+    }, [simulationResults, triggerCheck]);
 
     // Manual run function
     const runManualCheck = () => {
