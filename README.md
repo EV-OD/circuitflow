@@ -3,7 +3,6 @@
 
 **CircuitFlow** is a modern, web-based electronic circuit simulator and schematic capture tool. It combines an infinite canvas, orthogonal auto-wiring, and a powerful **SPICE simulation engine** (via WebAssembly) with an integrated **AI Engineering Agent**.
 
-![CircuitFlow Banner](https://via.placeholder.com/1200x600?text=CircuitFlow+Simulator)
 
 ## 🚀 Key Features
 
